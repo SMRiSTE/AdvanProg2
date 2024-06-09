@@ -1,25 +1,21 @@
 ﻿#include<iostream>
 
+#include<iostream>
+#include<execution>
+
 class smart_array {
-	double re_, im_;
 private:
 	int once = 0;
 	int size = 0;
-	int* arr = new int[size];
+	int* arr = 0;
 public:
-	smart_array& operator=(const smart_array& other) {
-		re_ = other.re_;
-		im_ = other.im_;
-		return *this;
-	}
-
 	smart_array(int size) {
 		this->size = size;
 		this->arr = new int[size];
 	}
 	void add_element(int num) {
 		if (once >= size) {
-			throw "Массив полон";
+			throw std::domain_error("Массив полон");
 		}
 		else {
 			arr[once] = num;
@@ -28,14 +24,36 @@ public:
 	}
 
 	int get_element(int elem) {
-		if (elem >= once) {
-			throw "Нет элемента с таким индексом";
+		if (elem >= once || elem < 0) {
+			throw std::out_of_range("Нет элемента с таким индексом");
 			return elem;
 		}
 		else {
 			return arr[elem];
 		}
 
+	}
+
+	smart_array(const smart_array& other) {
+		size = other.size;
+		arr = new int[other.size];
+		for (int i = 0; i < other.size; ++i) {
+			arr[i] = other.arr[i];
+		}
+	}
+
+	smart_array& operator=(const smart_array& other) {
+		if (&other != this) {
+			size = other.size;
+			arr = new int[other.size];
+			for (int i = 0; i < other.size; ++i) {
+				arr[i] = other.arr[i];
+			}
+		}
+		else {
+			throw std::domain_error("Нельзя присвоить класс самому себе");
+		}
+		return *this;
 	}
 
 	~smart_array() {

@@ -1,10 +1,11 @@
 ﻿#include<iostream>
+#include<execution>
 
 class smart_array {
 private:
 	int once = 0;
 	int size = 0;
-	int* arr = new int[size];
+	int* arr = 0;
 public:
 	smart_array(const smart_array&) = delete;
 	smart_array& operator=(const smart_array&) = delete;
@@ -15,7 +16,7 @@ public:
 	}
 	void add_element(int num) {
 		if (once >= size) {
-			throw "Массив полон";
+			throw std::domain_error("Массив полон");
 		}
 		else {
 			arr[once] = num;
@@ -24,8 +25,8 @@ public:
 	}
 
 	int get_element(int elem) {
-		if (elem >= once) {
-			throw "Нет элемента с таким индексом";
+		if (elem >= once || elem < 0) {
+			throw std::out_of_range("Нет элемента с таким индексом");
 			return elem;
 		}
 		else {
