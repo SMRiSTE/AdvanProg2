@@ -36,6 +36,7 @@ public:
 
 	smart_array(const smart_array& other) {
 		size = other.size;
+		once = other.once;
 		arr = new int[other.size];
 		for (int i = 0; i < other.size; ++i) {
 			arr[i] = other.arr[i];
@@ -49,11 +50,11 @@ public:
 			for (int i = 0; i < other.size; ++i) {
 				arr[i] = other.arr[i];
 			}
+			return *this;
 		}
 		else {
-			throw std::domain_error("Нельзя присвоить класс самому себе");
+			return *this;
 		}
-		return *this;
 	}
 
 	~smart_array() {
