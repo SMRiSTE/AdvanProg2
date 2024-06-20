@@ -46,6 +46,7 @@ public:
 	smart_array& operator=(const smart_array& other) {
 		if (&other != this) {
 			size = other.size;
+			once = other.once;
 			arr = new int[other.size];
 			for (int i = 0; i < other.size; ++i) {
 				arr[i] = other.arr[i];
